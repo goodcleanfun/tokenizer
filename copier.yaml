@@ -21,4 +21,9 @@ python_binding:
     default: true
     help: Include python binding?
 
+license:
+    type: str
+    default: MIT
+    help: License?
+
 _subdirectory: template
