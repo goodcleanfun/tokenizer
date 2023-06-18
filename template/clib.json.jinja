@@ -1,0 +1,18 @@
+{ 
+  "name": "word_{{name}}",
+  "version": "0.1.0",
+  "repo": "goodcleanfun/word_{{name}}",
+  "description": "{{ description }}",
+  "keywords": ["word", "tokenizer", "lexer", "re2c", "fsa", "{{ name }}"],
+  "dependencies": {
+    {% if include_standard_token_types -%}
+    "goodcleanfun/token_types", "*",
+    {%- endif %}
+    "goodcleanfun/tokens": "*"
+  },
+  "license": "{{ license }}",
+  "src": [
+    "src/scanner.h",
+    "src/scanner.c"
+  ]
+}
