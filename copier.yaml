@@ -1,0 +1,24 @@
+
+name:
+    type: str
+
+lang:
+    type: str
+    default: ""
+    help: Language if any (if agnostic leave blank)
+
+description:
+    type: str
+    default: "WORD tokenizer for {{name}}{% if lang %} ({{lang}}){% endif %}"
+
+include_standard_token_types:
+    type: bool
+    default: true
+    help: Include standard token types?
+
+python_binding:
+    type: bool
+    default: true
+    help: Include python binding?
+
+_subdirectory: template
