@@ -26,6 +26,11 @@ python_binding:
     default: true
     help: Include python binding?
 
+repo:
+    type: str
+    default: https://github.com/goodcleanfun/word_{{ name }}
+    help: Github repo
+
 license:
     type: str
     default: MIT
