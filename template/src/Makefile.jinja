@@ -1,0 +1,23 @@
+all: {% if unicode_categories %}unicode/unicode_categories.re {% endif %}{% if not standard_token_types %}token_types/token_types.h {% endif %}scanner.re scanner.c
+
+{% if unicode_categories -%}
+unicode/unicode_categories.re:
+	python3 ../scripts/word_breaks.py > unicode/unicode_categories.re
+{%- endif %}
+{% if not standard_token_types -%}
+token_types/token_types.h:
+	../token_types.sh > token_types/token_types.h
+{%- endif %}
+scanner.re:
+	cat scanner_head.re > scanner.re
+	{% if unicode_categories -%}
+	echo "\!include:re2c \"unicode/unicode_categories.re\"" >> scanner.re
+	{%- endif %}
+	cat ../rules.re >> scanner.re
+	cat scanner_tail.re >> scanner.re
+
+scanner.c: scanner.re
+	re2c --flex-syntax --nested-ifs --bit-vectors --computed-gotos --utf8 -o scanner.c scanner.re
+
+clean:
+	rm -f scanner.c scanner.re{% if not standard_token_types%} token_types/token_types.h{% endif %}{% if unicode_categories %} unicode/unicode_categories.re{% endif %}
