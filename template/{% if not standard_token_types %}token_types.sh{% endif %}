@@ -1,0 +1,19 @@
+count=0
+this_dir=$(dirname $(realpath $0))
+filename=token_types.txt
+if [ ! -f $this_dir/$filename ]; then
+    echo "$filename does not exist" >&2
+    exit 1
+fi
+token_types=$(grep -v "^#" $this_dir/$filename | grep -v "^//" | grep -v "^ *$" | grep -v "^$")
+if [ -z "$token_types" ]; then
+    echo "Must define at least one token type" >&2
+    exit 1
+fi;
+
+count=1
+for token_type in $token_types; do
+    token_type=$(echo $token_type | sed -e 's/#.*//'  -e 's/\/\/.*//' -e 's/ *$//' -e 's/  */ /g' | tr '[[:lower]]' '[[:upper]]' | tr ' ' '_');
+    echo "#define TOKEN_TYPE_$token_type $count";
+    count=$((count+1));
+done
