@@ -1,4 +1,4 @@
-all: {% if unicode_categories %}unicode/unicode_categories.re {% endif %}{% if not standard_token_types %}token_types/token_types.h {% endif %}scanner.re scanner.c
+all: {% if unicode_categories %}unicode/unicode_categories.re {% endif %}{% if python_binding or not standard_token_types %}token_types/token_types.h {% endif %}scanner.re scanner.c
 
 {% if unicode_categories -%}
 unicode/unicode_categories.re:
@@ -7,6 +7,10 @@ unicode/unicode_categories.re:
 {% if not standard_token_types -%}
 token_types/token_types.h:
 	../token_types.sh > token_types/token_types.h
+{%- elif python_binding %}
+token_types/token_types.h:
+	clib install ../clib.json -o ../deps
+	../python/generate_token_types.sh ../deps/token_types/token_types.h > ../python/token_types.c
 {%- endif %}
 scanner.re:
 	cat scanner_head.re > scanner.re
