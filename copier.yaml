@@ -11,10 +11,15 @@ description:
     type: str
     default: "WORD tokenizer for {{name}}{% if lang %} ({{lang}}){% endif %}"
 
-include_standard_token_types:
+standard_token_types:
     type: bool
     default: true
-    help: Include standard token types?
+    help: Use standard token types?
+
+unicode_categories:
+    type: bool
+    default: true
+    help: Include unicode categories?
 
 python_binding:
     type: bool
