@@ -1,0 +1,14 @@
+import glob
+from setuptools import setup, Extension
+
+setup_args = dict(
+    ext_modules = [
+        Extension(
+            'word_{{name}}',
+            glob.glob('python/*.c') + glob.glob('src/*.c') + glob.glob('deps/**/*.c'),
+            include_dirs = ['python', 'src', 'deps'],
+            define_macros = [('WORD_{{name | upper}}_VERSION', '"0.1.0"')],
+        )
+    ]
+)
+setup(**setup_args)
