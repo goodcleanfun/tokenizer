@@ -1,4 +1,4 @@
-#include "py_strings.h"
+#include "python_strings.h"
 
 void string_array_destroy(char **strings, size_t num_strings) {
     if (strings != NULL) {

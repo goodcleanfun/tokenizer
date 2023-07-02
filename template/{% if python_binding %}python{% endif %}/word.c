@@ -18,7 +18,7 @@ static PyObject *py_tokens(PyObject *self, PyObject *args, PyObject *kwargs) {
     uint32_t whitespace = 0;
     static char* kwlist[] = {"text", "whitespace", NULL};
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "s|I:tokenize", kwlist, &text, &whitespace)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "s|I:tokens", kwlist, &text, &whitespace)) {
         return NULL;
     }
 
@@ -65,14 +65,14 @@ error_free_input:
 
 
 static PyMethodDef tokenize_methods[] = {
-    {"tokens", (PyCFunction)py_tokens, METH_VARARGS, "tokens(text, whitespace)"},
+    {"tokens", (PyCFunction)py_tokens, METH_VARARGS | METH_KEYWORDS, "tokens(text, whitespace=False)"},
     {NULL, NULL, 0, NULL}        /* Sentinel */
 };
 
 
 static struct PyModuleDef tokenize_module = {
     PyModuleDef_HEAD_INIT,
-    "_tokenize",
+    "_scanner",
     NULL,
     -1,
     tokenize_methods
