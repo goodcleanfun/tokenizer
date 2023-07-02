@@ -1,5 +1,5 @@
-#ifndef HAVE_PYPOSTAL_UTILS_H
-#define HAVE_PYPOSTAL_UTILS_H
+#ifndef HAVE_PYTHON_STRINGS_H
+#define HAVE_PYTHON_STRINGS_H
 
 #include <Python.h>
 #include <stdlib.h>
