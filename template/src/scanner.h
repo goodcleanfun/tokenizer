@@ -5,8 +5,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#include "token_types.h"
-#include "tokens.h"
+#include "token_types/token_types.h"
+#include "tokens/tokens.h"
 
 typedef struct scanner {
     unsigned char *src, *cursor, *start, *end;

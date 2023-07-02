@@ -13,9 +13,6 @@ token_types/token_types.h:
 {%- endif %}
 scanner.re:
 	cat scanner_head.re > scanner.re
-	{% if unicode_categories -%}
-	echo "\!include:re2c \"unicode/unicode_categories.re\"" >> scanner.re
-	{%- endif %}
 	cat ../rules.re >> scanner.re
 	cat scanner_tail.re >> scanner.re
 
