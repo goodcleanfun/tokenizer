@@ -7,6 +7,10 @@ lang:
     default: ""
     help: Language if any (if agnostic leave blank)
 
+repo_name:
+    type: str
+    default: word_{{ name }}
+
 description:
     type: str
     default: "WORD tokenizer for {{name}}{% if lang %} ({{lang}}){% endif %}"
@@ -26,10 +30,13 @@ python_binding:
     default: true
     help: Include python binding?
 
-repo:
+repo_url:
     type: str
-    default: https://github.com/goodcleanfun/word_{{ name }}
+    default: https://github.com/goodcleanfun/{{ repo_name }}
     help: Github repo
+
+author:
+    type: str
 
 license:
     type: str
