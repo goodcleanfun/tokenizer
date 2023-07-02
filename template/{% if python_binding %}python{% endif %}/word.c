@@ -2,7 +2,6 @@
 #include <Python.h>
 
 #include "scanner.h"
-#include "python_strings.h"
 
 static PyObject *tokens(PyObject *self, PyObject *args) {
     char *text;
@@ -72,13 +71,13 @@ static PyMethodDef tokenize_methods[] = {
 
 static struct PyModuleDef tokenize_module = {
     PyModuleDef_HEAD_INIT,
-    "_scanner",
+    "_tokenize",
     NULL,
     -1,
     tokenize_methods
 };
 
-PyMODINIT_FUNC PyInit_tokenize(void) {
+PyMODINIT_FUNC PyInit__tokenize(void) {
     return PyModule_Create(&tokenize_module);
 }
 

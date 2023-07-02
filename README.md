@@ -1,7 +1,7 @@
-WORD
-====
+tokenizer
+=========
 
-Write Out Rules Directly (WORD) is a method for writing super-fast tokenizers/lexers using re2c. A set of regex rules and their associated token types is reduced to a fast, optimized, C-based finite state automaton (FSA).
+Method for writing super-fast tokenizers/lexers using re2c. A set of regex rules and their associated token types is reduced to a fast, optimized, C-based finite state automaton (FSA).
 
 The rules could be derived from data or written out. Unicode categories are provided and kept up-to-date.
 

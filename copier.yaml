@@ -9,11 +9,11 @@ lang:
 
 repo_name:
     type: str
-    default: word_{{ name }}
+    default: {{ name }}
 
 description:
     type: str
-    default: "WORD tokenizer for {{name}}{% if lang %} ({{lang}}){% endif %}"
+    default: "Tokenizer for {{name}}{% if lang %} ({{lang}}){% endif %}"
 
 standard_token_types:
     type: bool
