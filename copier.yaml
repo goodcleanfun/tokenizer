@@ -20,10 +20,10 @@ standard_token_types:
     default: true
     help: Use standard token types?
 
-unicode_categories:
+unicode_word_breaks:
     type: bool
     default: true
-    help: Include unicode categories?
+    help: Include unicode word breaks?
 
 python_binding:
     type: bool
