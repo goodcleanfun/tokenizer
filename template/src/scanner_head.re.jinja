@@ -18,8 +18,8 @@ uint16_t scan_token(scanner_t *s)
 #define YYLIMIT     (s->end)
 /*!re2c
 re2c:yyfill:enable = 0;
-{%- if unicode_categories %}
-!include "unicode/unicode_categories.re";
+{% if unicode_word_breaks -%}
+!include "word_breaks/unicode_word_breaks.re";
 {%- endif %}
 
 // Start rules

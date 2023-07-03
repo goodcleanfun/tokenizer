@@ -1,23 +1,27 @@
-all: {% if unicode_categories %}unicode/unicode_categories.re {% endif %}{% if python_binding or not standard_token_types %}token_types/token_types.h {% endif %}scanner.re scanner.c
+{% set scanner_needs_clib_install = unicode_word_breaks or standard_token_types -%}
+all: {% if scanner_needs_clib_install %}clib_install {% endif %}{% if unicode_word_breaks %}unicode_word_breaks.re {% endif %}{% if python_binding or not standard_token_types %}token_types/token_types.h {% endif %}scanner.re scanner.c
 
-{% if unicode_categories -%}
-unicode/unicode_categories.re:
-	python3 ../scripts/word_breaks.py > unicode/unicode_categories.re
+{% if scanner_needs_clib_install -%}
+clib_install:
+	clib install ../clib.json -o ../deps
+{%- endif %}
+
+{% if unicode_word_breaks -%}
+unicode_word_breaks.re: clib_install
 {%- endif %}
 {% if not standard_token_types -%}
 token_types/token_types.h:
 	../token_types.sh > token_types/token_types.h
 {%- elif python_binding %}
-token_types/token_types.h:
-	clib install ../clib.json -o ../deps
+token_types/token_types.h: clib_install
 {%- endif %}
 scanner.re:
 	cat scanner_head.re > scanner.re
 	cat ../rules.re >> scanner.re
 	cat scanner_tail.re >> scanner.re
 
-scanner.c: scanner.re
-	re2c --flex-syntax --nested-ifs --bit-vectors --computed-gotos --utf8 -o scanner.c scanner.re
+scanner.c: scanner.re {% if scanner_needs_clib_install %}clib_install{% endif %}
+	re2c --flex-syntax --nested-ifs --bit-vectors --computed-gotos --utf8{% if scanner_needs_clib_install %} -I ../deps{% endif %} -o scanner.c scanner.re
 
 clean:
-	rm -f scanner.c scanner.re{% if not standard_token_types%} token_types/token_types.h{% endif %}{% if unicode_categories %} unicode/unicode_categories.re{% endif %}
+	rm -f scanner.c scanner.re{% if not standard_token_types%} token_types/token_types.h{% endif %}
