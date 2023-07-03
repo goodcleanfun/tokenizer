@@ -63,21 +63,21 @@ error_free_input:
 
 
 
-static PyMethodDef tokenize_methods[] = {
+static PyMethodDef tokenizer_methods[] = {
     {"tokens", (PyCFunction)py_tokens, METH_VARARGS | METH_KEYWORDS, "tokens(text, whitespace=False)"},
     {NULL, NULL, 0, NULL}        /* Sentinel */
 };
 
 
-static struct PyModuleDef tokenize_module = {
+static struct PyModuleDef tokenizer_module = {
     PyModuleDef_HEAD_INIT,
-    "_tokenize",
+    "_tokenizer",
     NULL,
     -1,
-    tokenize_methods
+    tokenizer_methods
 };
 
-PyMODINIT_FUNC PyInit__tokenize(void) {
-    return PyModule_Create(&tokenize_module);
+PyMODINIT_FUNC PyInit__tokenizer(void) {
+    return PyModule_Create(&tokenizer_module);
 }
 
