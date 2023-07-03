@@ -8,6 +8,9 @@
     {% if standard_token_types -%}
     "goodcleanfun/token_types": "*",
     {%- endif %}
+    {% if unicode_word_breaks -%}
+    "goodcleanfun/word_breaks": "*",
+    {%- endif %}
     "goodcleanfun/tokens": "*"
   },
   "license": "{{ license }}",
