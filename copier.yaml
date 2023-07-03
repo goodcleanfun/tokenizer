@@ -1,4 +1,3 @@
-
 name:
     type: str
 
@@ -9,7 +8,7 @@ lang:
 
 repo_name:
     type: str
-    default: {{ name }}
+    default: "{{name}}"
 
 description:
     type: str
