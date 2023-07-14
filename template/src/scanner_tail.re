@@ -28,6 +28,8 @@ void tokenize_add_tokens(token_array *tokens, const char *input, size_t len, boo
         token_start = scanner.start - scanner.src;
         token_length = scanner.cursor - scanner.start;
 
+        if (token_length == 0) break;
+
         token_t token;
         token.offset = token_start;
         token.len = token_length;
