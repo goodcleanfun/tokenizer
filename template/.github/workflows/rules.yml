@@ -14,7 +14,8 @@ jobs:
         - name: Build
           run: |
             sudo apt-get update -y
-            sudo apt-get install re2c make bumpversion
+            sudo apt-get install re2c make bumpversion git libcurl4-gnutls-dev gcc
+            git clone https://github.com/clibs/clib.git /tmp/clib && sudo make -C /tmp/clib install
             make -C src clean
             make
             make rules
