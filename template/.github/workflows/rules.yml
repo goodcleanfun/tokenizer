@@ -5,6 +5,10 @@ on:
       paths:
         - 'rules.re'
 
+permissions:
+    contents: write
+    pull-requests: write
+
 jobs:
     build:
         runs-on: ubuntu-latest
