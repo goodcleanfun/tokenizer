@@ -1,4 +1,4 @@
-all: {% if not standard_token_types %}token_types/token_types.h {% endif %}scanner.re scanner.c
+all: {% if not standard_token_types %}token_types/token_types.h {% endif %}
 
 {% if not standard_token_types -%}
 token_types/token_types.h:
