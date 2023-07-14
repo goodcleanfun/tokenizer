@@ -1,3 +1,4 @@
+all: {{ repo_name }}/token_types.py
+
 {{ repo_name }}/token_types.py:
-	{% if standard_token_types %}clib install ../clib.json -o ../deps{% endif %}.
 	./gen_token_types.sh {% if standard_token_types %}../deps/token_types/token_types.h{% else %}../src/token_types/token_types.h{% endif %} > {{ repo_name }}/token_types.py
