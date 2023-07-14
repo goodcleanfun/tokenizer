@@ -6,8 +6,6 @@
 
 static PyObject *py_tokens(PyObject *self, PyObject *args, PyObject *kwargs) {
     char *text;
-
-    char *text;
     if (!PyArg_ParseTuple(args, "s:tokens", &text)) {
         return NULL;
     }
