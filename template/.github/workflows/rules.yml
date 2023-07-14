@@ -25,9 +25,9 @@ jobs:
             make rules
             git config user.name "Automated"
             git config user.email "actions@users.noreply.github.com"
-            git add src/scanner.re src/scanner.c
+            git add -A
             timestamp=$(date -u)
-            git commit -m "Updated scanner: ${timestamp}" || exit 0
+            git commit -m "Updated rules: ${timestamp}" || exit 0
             bumpversion minor
             git push
             git push --tags
