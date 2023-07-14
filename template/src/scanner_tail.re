@@ -22,13 +22,11 @@ void tokenize_add_tokens(token_array *tokens, const char *input, size_t len, boo
 
     size_t consumed = 0;
 
-    while (consumed < len && (token_type = scan_token(&scanner)) != END) {
+    while (consumed < len) {
+        token_type = scan_token(&scanner);
+
         token_start = scanner.start - scanner.src;
         token_length = scanner.cursor - scanner.start;
-
-        if ((token_type == WHITESPACE && !keep_whitespace) || (token_type == INVALID_CHAR)) {
-            continue;
-        }
 
         token_t token;
         token.offset = token_start;
