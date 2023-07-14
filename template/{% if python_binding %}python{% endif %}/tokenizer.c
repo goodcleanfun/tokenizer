@@ -3,33 +3,19 @@
 
 #include "scanner.h"
 
-static PyObject *tokens(PyObject *self, PyObject *args) {
-    char *text;
-    if (!PyArg_ParseTuple(args, "s", &text)) {
-        return NULL;
-    }
-    return Py_BuildValue("s", tokenize(text));
-}
-
 
 static PyObject *py_tokens(PyObject *self, PyObject *args, PyObject *kwargs) {
     char *text;
-    uint32_t whitespace = 0;
-    static char* kwlist[] = {"text", "whitespace", NULL};
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "s|I:tokens", kwlist, &text, &whitespace)) {
+    char *text;
+    if (!PyArg_ParseTuple(args, "s:tokens", &text)) {
         return NULL;
     }
 
-    token_array *tokens;
+    token_array *tokens = tokenize(text);
 
-    if (!whitespace) {
-        tokens = tokenize(text);
-    } else {
-        tokens = tokenize_keep_whitespace(text);
-    }
     if (tokens == NULL) {
-        goto error_free_input;
+        return NULL;
     }
 
     size_t num_tokens = tokens->n;
@@ -49,16 +35,14 @@ static PyObject *py_tokens(PyObject *self, PyObject *args, PyObject *kwargs) {
         }
     }
 
-    free(text);
-    free(tokens);
+    token_array_destroy(tokens);
 
     return result;
 
 error_free_tokens:
-    free(tokens);
-error_free_input:
-    free(text);
-    return 0;
+    token_array_destroy(tokens);
+error_return_null:
+    return NULL;
 }
 
 
