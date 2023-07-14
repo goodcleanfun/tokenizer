@@ -1,0 +1,29 @@
+on:
+    push:
+      branches:
+        - main
+      paths:
+        - './rules.re'
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+        - name: Checkout
+          uses: actions/checkout@v3
+        - name: Build
+          run: |
+            sudo apt-get update -y
+            sudo apt-get install re2c make bumpversion
+            make rules
+            git config user.name "Automated"
+            git config user.email "actions@users.noreply.github.com"
+            if [ "$(git diff --name-only HEAD)" ]; then
+              git add -A
+              timestamp=$(date -u)
+              git commit -m "Updated scanner: ${timestamp}" || exit 0
+              bumpversion minor
+              git push
+              git push --tags
+            fi;
+  
