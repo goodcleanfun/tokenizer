@@ -6,7 +6,7 @@
 
 static PyObject *py_tokens(PyObject *self, PyObject *args, PyObject *kwargs) {
     char *text;
-    if (!PyArg_ParseTuple(args, "s:tokens", &text)) {
+    if (!PyArg_ParseTuple(args, "s:text", &text)) {
         return NULL;
     }
 
@@ -45,8 +45,49 @@ error_return_null:
 
 
 
+static PyObject *py_tokenize(PyObject *self, PyObject *args, PyObject *kwargs) {
+    char *text;
+    if (!PyArg_ParseTuple(args, "s:text", &text)) {
+        return NULL;
+    }
+
+    token_array *tokens = tokenize(text);
+
+    if (tokens == NULL) {
+        return NULL;
+    }
+
+    size_t num_tokens = tokens->n;
+    PyObject *result = PyTuple_New(num_tokens);
+    if (!result) {
+        goto error_free_tokens;
+    }
+
+    PyObject *tuple;
+
+    token_t token;
+    for (size_t i = 0; i < num_tokens; i++) {
+        token = tokens->a[i];
+        tuple = Py_BuildValue("s#I", text + token.offset, token.len, token.type);
+        if (PyTuple_SetItem(result, i, tuple) < 0) {
+            goto error_free_tokens;
+        }
+    }
+
+    token_array_destroy(tokens);
+
+    return result;
+
+error_free_tokens:
+    token_array_destroy(tokens);
+error_return_null:
+    return NULL;
+}
+
+
 static PyMethodDef tokenizer_methods[] = {
-    {"tokens", (PyCFunction)py_tokens, METH_VARARGS | METH_KEYWORDS, "tokens(text, whitespace=False)"},
+    {"tokens", (PyCFunction)py_tokens, METH_VARARGS | METH_KEYWORDS, "tokens(text)"},
+    {"tokenize", (PyCFunction)py_tokens, METH_VARARGS | METH_KEYWORDS, "tokenize(text)"},
     {NULL, NULL, 0, NULL}        /* Sentinel */
 };
 
