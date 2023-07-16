@@ -29,6 +29,12 @@ python_binding:
     default: true
     help: Include python binding?
 
+pypi_package:
+    type: bool
+    default: "{{ python_binding }}"
+    when: "{{ python_binding }}"
+    help: Build PyPI package?
+
 repo_url:
     type: str
     default: https://github.com/goodcleanfun/{{ repo_name }}
