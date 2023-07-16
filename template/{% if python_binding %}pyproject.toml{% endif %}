@@ -63,4 +63,4 @@ ignore = [
 where = ["python"]
 
 [tool.setuptools.dynamic]
-version = {attr = "semiformal.__version__"}
+version = {attr = "{{ repo_name }}.__version__"}
