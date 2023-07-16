@@ -87,7 +87,7 @@ error_return_null:
 
 static PyMethodDef tokenizer_methods[] = {
     {"tokens", (PyCFunction)py_tokens, METH_VARARGS | METH_KEYWORDS, "tokens(text)"},
-    {"tokenize", (PyCFunction)py_tokens, METH_VARARGS | METH_KEYWORDS, "tokenize(text)"},
+    {"tokenize", (PyCFunction)py_tokenize, METH_VARARGS | METH_KEYWORDS, "tokenize(text)"},
     {NULL, NULL, 0, NULL}        /* Sentinel */
 };
 
