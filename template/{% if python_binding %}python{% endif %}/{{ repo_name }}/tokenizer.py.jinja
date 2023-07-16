@@ -1,6 +1,7 @@
 from typing import List, Tuple
 
 from {{ repo_name }} import _tokenizer
+from {{ repo_name }}.token_types import TokenType
 
 def tokens(text: str) -> Tuple[Tuple[int, int, int]]:
     return _tokenizer.tokens(text)
