@@ -29,9 +29,13 @@ jobs:
       - name: Install cibuildwheel
         if: steps.cache.outputs.cache-hit != 'true'
         run: pip install cibuildwheel
+
+      - name: Format Python version
+        run: echo "CIBUILDWHEEL_PYTHON_VERSION=$(echo ${{ matrix.python-version }} | tr -d .)" >> $GITHUB_ENV
+
       - name: Build wheels
         env:
-          CIBW_BUILD: cp${{ matrix.python }}-*
+          CIBW_BUILD: cp${{ env.CIBUILDWHEEL_PYTHON_VERSION }}-*
           CIBW_ARCHS_MACOS: x86_64 arm64
         run: python -m cibuildwheel --output-dir wheelhouse
 
@@ -62,17 +66,33 @@ jobs:
     - name: Install cibuildwheel
       if: steps.cache.outputs.cache-hit != 'true'
       run: pip install cibuildwheel
+    - name: Format Python version
+      run: echo "CIBUILDWHEEL_PYTHON_VERSION=$(echo ${{ matrix.python-version }} | tr -d .)" >> $GITHUB_ENV
     - name: Build wheels
       env:
-        CIBW_BUILD: cp${{ matrix.python }}-*
+        CIBW_BUILD: cp${{ env.CIBUILDWHEEL_PYTHON_VERSION }}-*
       run: python -m cibuildwheel --output-dir wheelhouse
     - uses: actions/upload-artifact@v3
       with:
         path: ./wheelhouse/*.whl
 
+  make_sdist:
+    name: Make SDist
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Build SDist
+      run: pipx run build --sdist
+
+    - uses: actions/upload-artifact@v3
+      with:
+        path: dist/*.tar.gz
 
   upload_wheels:
-    needs: build_wheels
+    needs: [make_sdist, build_wheels]
     runs-on: ubuntu-latest
 
     steps:
@@ -84,3 +104,19 @@ jobs:
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           password: ${{ secrets.PYPI_API_TOKEN }}
+
+  upload_all:
+    needs: [build_wheels, make_sdist]
+    environment: pypi
+    permissions:
+      id-token: write
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/download-artifact@v3
+      with:
+        path: wheelhouse
+    - uses: actions/download-artifact@v3
+      with:
+        name: artifact
+        path: dist
+    - uses: pypa/gh-action-pypi-publish@release/v1
