@@ -8,10 +8,16 @@ def tokens(text: str) -> Tuple[Tuple[int, int, int]]:
 
 
 def tokenize(text: str, exclude_token_types: List[[TokenType, int]]=None) -> List[Tuple[str, TokenType]]:
-    token_classes = [(s, TokenType(c)) for s, c in _tokenizer.tokenize(text)]
+    enum_values = TokenType._value2member_map_
+    token_classes = _tokenizer.tokenize(text)
+    if exclude_token_types:
+        exclude_token_types = [getattr(c, 'value', c) for c in exclude_token_types]
+        token_classes = list(map(filterfalse(exclude_token_types.__contains__, token_classes)))
+
+    token_classes = [(s, enum_values[c]) for s, c in ]
 
     if exclude_token_types:
-        exclude_token_types = list(map(TokenType, exclude_token_types))
+        exclude_token_types = list(map(enum_values.__getitem__, exclude_token_types))
         token_classes = [(s, c) for s, c in token_classes if c not in exclude_token_types]
 
     return token_classes
