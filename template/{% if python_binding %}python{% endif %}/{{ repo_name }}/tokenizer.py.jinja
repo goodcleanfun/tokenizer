@@ -12,12 +12,6 @@ def tokenize(text: str, exclude_token_types: List[[TokenType, int]]=None) -> Lis
     token_classes = _tokenizer.tokenize(text)
     if exclude_token_types:
         exclude_token_types = [getattr(c, 'value', c) for c in exclude_token_types]
-        token_classes = list(map(filterfalse(exclude_token_types.__contains__, token_classes)))
+        return [(s, enum_values[c]) for s, c in token_classes if c not in exclude_token_types]
+    return [(s, enum_values[c]) for s, c in token_classes]
 
-    token_classes = [(s, enum_values[c]) for s, c in ]
-
-    if exclude_token_types:
-        exclude_token_types = list(map(enum_values.__getitem__, exclude_token_types))
-        token_classes = [(s, c) for s, c in token_classes if c not in exclude_token_types]
-
-    return token_classes
