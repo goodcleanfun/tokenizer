@@ -31,7 +31,7 @@ jobs:
         run: pip install cibuildwheel
 
       - name: Format Python version
-        run: echo "CIBUILDWHEEL_PYTHON_VERSION=$(echo ${{ matrix.python-version }} | tr -d .)" >> $GITHUB_ENV
+        run: echo "CIBUILDWHEEL_PYTHON_VERSION=$(echo ${{ matrix.python }} | tr -d .)" >> $GITHUB_ENV
 
       - name: Build wheels
         env:
@@ -67,7 +67,8 @@ jobs:
       if: steps.cache.outputs.cache-hit != 'true'
       run: pip install cibuildwheel
     - name: Format Python version
-      run: echo "CIBUILDWHEEL_PYTHON_VERSION=$(echo ${{ matrix.python-version }} | tr -d .)" >> $GITHUB_ENV
+      run: echo "CIBUILDWHEEL_PYTHON_VERSION=$(echo ${{ matrix.python }} | tr -d .)" >> $GITHUB_ENV
+
     - name: Build wheels
       env:
         CIBW_BUILD: cp${{ env.CIBUILDWHEEL_PYTHON_VERSION }}-*
@@ -91,20 +92,6 @@ jobs:
       with:
         path: dist/*.tar.gz
 
-  upload_wheels:
-    needs: [make_sdist, build_wheels]
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/download-artifact@v3
-        with:
-          path: wheelhouse
-
-      - name: Publish package
-        uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          password: ${{ secrets.PYPI_API_TOKEN }}
-
   upload_all:
     needs: [build_wheels, make_sdist]
     environment: pypi
@@ -119,4 +106,7 @@ jobs:
       with:
         name: artifact
         path: dist
-    - uses: pypa/gh-action-pypi-publish@release/v1
+    - name: Publish package
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        password: ${{ secrets.PYPI_API_TOKEN }}
