@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools"]
+requires = ["setuptools", "setuptools_scm[toml]", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -61,3 +61,6 @@ ignore = [
 
 [tool.setuptools.packages.find]
 where = ["python"]
+
+[tool.setuptools.dynamic]
+version = {attr = "semiformal.__version__"}
