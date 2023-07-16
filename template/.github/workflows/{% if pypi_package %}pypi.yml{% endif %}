@@ -43,11 +43,10 @@ jobs:
         with:
           path: ./wheelhouse/*.whl
 
-  build_wheels:
-    runs-on: ${{ matrix.os }}
+  build_wheels_linux:
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
         python: ["3.8", "3.9", "3.10", "3.11"]
     steps:
     - uses: actions/checkout@v3
@@ -93,7 +92,7 @@ jobs:
         path: dist/*.tar.gz
 
   upload_all:
-    needs: [build_wheels, make_sdist]
+    needs: [build_wheels_macos, build_wheels_linux, make_sdist]
     environment: pypi
     permissions:
       id-token: write
