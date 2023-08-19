@@ -11,6 +11,9 @@
     {% if unicode_word_breaks -%}
     "goodcleanfun/word_breaks": "*",
     {%- endif %}
+    {% if emoji -%}
+    "goodcleanfun/emoji_sequences": "*",
+    {%- endif %}
     "goodcleanfun/tokens": "*"
   },
   "license": "{{ license }}",

@@ -24,6 +24,11 @@ unicode_word_breaks:
     default: true
     help: Include unicode word breaks?
 
+emoji:
+    type: bool
+    default: true
+    help: Include emoji patterns?
+
 python_binding:
     type: bool
     default: true

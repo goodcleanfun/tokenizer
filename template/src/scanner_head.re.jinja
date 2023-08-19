@@ -21,5 +21,8 @@ re2c:yyfill:enable = 0;
 {% if unicode_word_breaks -%}
 !include "word_breaks/unicode_word_breaks.re";
 {%- endif %}
+{% if emoji -%}
+!include "emoji_sequences/emoji_sequences.re";
+{%- endif %}
 
 // Start rules
