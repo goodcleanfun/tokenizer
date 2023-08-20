@@ -19,6 +19,11 @@ standard_token_types:
     default: true
     help: Use standard token types?
 
+unicode_categories:
+    type: bool
+    default: true
+    help: Include unicode categories?
+
 unicode_word_breaks:
     type: bool
     default: true
