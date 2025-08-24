@@ -2,12 +2,12 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "scanner.h"
+#include "{{ prefix | trim('_') }}_scanner.h"
 {% if include_standard_token_types -%}
 #include "token_types/token_types.h"
 {%- endif %}
 
-uint16_t scan_token(scanner_t *s)
+uint16_t {{ prefix | trim('_') }}_scan_token({{ prefix | trim('_') }}_scanner_t *s)
 {
     s->start = s->cursor;
     unsigned char *marker = s->cursor;

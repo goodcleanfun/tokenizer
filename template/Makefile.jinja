@@ -8,7 +8,7 @@ clib_install:
 	clib install .
 
 rules:
-	$(MAKE) -C src scanner.re scanner.c
+	$(MAKE) -C src scanner.re {{ prefix | trim('_') }}_scanner.c
 
 deploy:
 	bumpversion patch

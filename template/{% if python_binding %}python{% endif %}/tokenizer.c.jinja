@@ -1,7 +1,7 @@
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>
 
-#include "scanner.h"
+#include "{{ prefix | trim('_') }}_scanner.h"
 
 
 static PyObject *py_tokens(PyObject *self, PyObject *args, PyObject *kwargs) {
@@ -10,7 +10,7 @@ static PyObject *py_tokens(PyObject *self, PyObject *args, PyObject *kwargs) {
         return NULL;
     }
 
-    token_array *tokens = tokenize(text);
+    token_array *tokens = {{ prefix | trim('_') }}_tokenize(text);
 
     if (tokens == NULL) {
         return NULL;
@@ -51,7 +51,7 @@ static PyObject *py_tokenize(PyObject *self, PyObject *args, PyObject *kwargs) {
         return NULL;
     }
 
-    token_array *tokens = tokenize(text);
+    token_array *tokens = {{ prefix | trim('_') }}_tokenize(text);
 
     if (tokens == NULL) {
         return NULL;

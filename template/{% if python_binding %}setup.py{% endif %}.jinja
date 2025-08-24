@@ -8,8 +8,8 @@ class build_ext_mixed_optimization_level(build_ext):
 
         original_compile = self.compiler._compile
         def compile_mixed_optimization_level(obj, src, ext, cc_args, extra_postargs, pp_opts):
-            if src == "src/scanner.c":
-                extra_postargs = [s for s in extra_postargs if s not in ("-O3", "-O2", "-O1")] + ["-O0"]
+            if src == "src/{{ prefix | trim('_') }}_scanner.c":
+                extra_postargs = [s for s in extra_postargs if not s.startswith('-O')] + ["-O0"]
             return original_compile(obj, src, ext, cc_args, extra_postargs, pp_opts)
         self.compiler._compile = compile_mixed_optimization_level
         try:

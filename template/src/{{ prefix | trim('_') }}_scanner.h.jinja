@@ -1,0 +1,20 @@
+#pragma once
+
+#include <stdlib.h>
+#include <stdint.h>
+#include <stdbool.h>
+
+#include "token_types/token_types.h"
+#include "token_array/token_array.h"
+
+typedef struct {{ prefix | trim('_') }}_scanner {
+    uint8_t *src, *cursor, *start, *end;
+} {{ prefix | trim('_') }}_scanner_t;
+
+uint16_t {{ prefix | trim('_') }}_scan_token({{ prefix | trim('_') }}_scanner_t *s);
+
+{{ prefix | trim('_') }}_scanner_t {{ prefix | trim('_') }}_scanner_from_string(const char *input, size_t len);
+
+void {{ prefix | trim('_') }}_tokenize_add_tokens(token_array *tokens, const char *input, size_t len);
+token_array *{{ prefix | trim('_') }}_tokenize(const char *input);
+

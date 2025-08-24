@@ -17,11 +17,11 @@
     {% if emoji -%}
     "goodcleanfun/emoji_sequences": "*",
     {%- endif %}
-    "goodcleanfun/tokens": "*"
+    "goodcleanfun/token_array": "*"
   },
   "license": "{{ license }}",
   "src": [
-    "src/scanner.h",
-    "src/scanner.c"
+    "src/{{ prefix | trim('_') }}_scanner.h",
+    "src/{{ prefix | trim('_') }}_scanner.c"
   ]
 }

@@ -1,6 +1,10 @@
 name:
     type: str
 
+prefix:
+    type: str
+    default: "{{ name | lower | trim | replace(' ', '_') }}"
+
 lang:
     type: str
     default: ""
