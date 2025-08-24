@@ -26,7 +26,7 @@ static PyObject *py_tokens(PyObject *self, PyObject *args, PyObject *kwargs) {
 
     token_t token;
     for (size_t i = 0; i < num_tokens; i++) {
-        token = tokens->a[i];
+        token = token_array_get_unchecked(tokens, i);
         tuple = Py_BuildValue("III", token.offset, token.len, token.type);
         if (PyTuple_SetItem(result, i, tuple) < 0) {
             goto error_free_tokens;
