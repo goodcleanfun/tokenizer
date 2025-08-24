@@ -1,5 +1,4 @@
-#ifndef SCANNER_H
-#define SCANNER_H
+#pragma once
 
 #include <stdlib.h>
 #include <stdint.h>
@@ -19,7 +18,3 @@ scanner_t scanner_from_string(const char *input, size_t len);
 void tokenize_add_tokens(token_array *tokens, const char *input, size_t len);
 token_array *tokenize(const char *input);
 
-
- 
-
-#endif
